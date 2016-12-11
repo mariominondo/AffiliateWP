@@ -31,30 +31,25 @@ class Affiliate_WP_Shortcodes {
 
 		affwp_enqueue_script( 'affwp-frontend', 'affiliate_area' );
 
+		$show_registration = apply_filters( 'affwp_affiliate_area_show_registration', true ) ? affiliate_wp()->templates->get_template_part( 'register' ) : '';
+		$show_login        = apply_filters( 'affwp_affiliate_area_show_login', true ) ? affiliate_wp()->templates->get_template_part( 'login' ) : '';
+
 		ob_start();
 
 		if ( is_user_logged_in() && affwp_is_affiliate() ) {
-
 			affiliate_wp()->templates->get_template_part( 'dashboard' );
-
 		} elseif ( is_user_logged_in() && affiliate_wp()->settings->get( 'allow_affiliate_registration' ) ) {
-
-			affiliate_wp()->templates->get_template_part( 'register' );
-
+			$show_registration;
 		} else {
 
 			if ( affiliate_wp()->settings->get( 'allow_affiliate_registration' ) ) {
-
-				affiliate_wp()->templates->get_template_part( 'register' );
-
+				$show_registration;
 			} else {
 				affiliate_wp()->templates->get_template_part( 'no', 'access' );
 			}
 
 			if ( ! is_user_logged_in() ) {
-
-				affiliate_wp()->templates->get_template_part( 'login' );
-
+				$show_login;
 			}
 
 		}
