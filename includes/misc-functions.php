@@ -865,7 +865,7 @@ function affwp_enqueue_script( $handle, $context = '' ) {
  * @since  2.0
  * @return void
  */
-function affwp_affiliate_area_forms() {
+function affwp_filter_shown_affiliate_area_forms() {
 
 	$form = affiliate_wp()->settings->get( 'affiliate_area_forms' );
 
@@ -890,4 +890,4 @@ function affwp_affiliate_area_forms() {
 	}
 
 }
-add_action( 'template_redirect', 'affwp_affiliate_area_forms' );
+add_action( 'template_redirect', 'affwp_filter_shown_affiliate_area_forms' );
