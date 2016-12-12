@@ -857,3 +857,37 @@ function affwp_enqueue_script( $handle, $context = '' ) {
 		wp_enqueue_script( $handle );
 	}
 }
+
+
+/**
+ * Controls what forms are shown on the Affiliate Area page.
+ *
+ * @since  2.0
+ * @return void
+ */
+function affwp_affiliate_area_forms() {
+
+	$form = affiliate_wp()->settings->get( 'affiliate_area_forms' );
+
+	switch ( $form ) {
+
+		case 'registration':
+			add_filter( 'affwp_affiliate_area_show_login', '__return_false' );
+			break;
+
+		case 'login':
+			add_filter( 'affwp_affiliate_area_show_registration', '__return_false' );
+			break;
+
+		case 'none':
+			add_filter( 'affwp_affiliate_area_show_registration', '__return_false' );
+			add_filter( 'affwp_affiliate_area_show_login', '__return_false' );
+			break;
+
+		default:
+		case 'both':
+			break;
+	}
+
+}
+add_action( 'template_redirect', 'affwp_affiliate_area_forms' );
